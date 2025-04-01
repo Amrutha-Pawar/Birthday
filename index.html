@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Card</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(to bottom, #ff7eb9, #ff65a3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .birthday-card {
+            position: relative;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 40px 60px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transform: scale(0.9);
+            animation: card-animation 0.6s ease-out forwards;
+        }
+
+        @keyframes card-animation {
+            from {
+                transform: scale(0.5);
+            }
+            to {
+                transform: scale(1);
+            }
+        }
+
+        h1 {
+            font-size: 3.5em;
+            color: #ff4081;
+            font-family: 'Comic Sans MS', sans-serif;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: bounce 1s infinite alternate;
+        }
+
+        @keyframes bounce {
+            0% {
+                transform: translateY(0);
+            }
+            100% {
+                transform: translateY(-10px);
+            }
+        }
+
+        p {
+            font-size: 1.3em;
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-weight: 500;
+            animation: fade-in 2s ease-in-out;
+        }
+
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        button {
+            background: #ff4081;
+            color: #fff;
+            padding: 18px 35px;
+            border-radius: 50px;
+            border: none;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: #ff1e63;
+            transform: scale(1.1);
+        }
+
+        button:active {
+            transform: scale(1);
+        }
+
+        /* Balloon Animation */
+        .balloon {
+            position: absolute;
+            top: -150px;
+            right: -80px;
+            animation: float-balloon 6s ease-in-out infinite;
+            width: 70px;
+            cursor: pointer;
+        }
+
+        @keyframes float-balloon {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(10deg);
+            }
+            100% {
+                transform: translateY(0) rotate(-10deg);
+            }
+        }
+
+        /* Flower Animation */
+        .flower {
+            position: absolute;
+            bottom: -100px;
+            left: 20%;
+            animation: float-flower 5s ease-in-out infinite;
+            width: 60px;
+        }
+
+        @keyframes float-flower {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(5deg);
+            }
+            100% {
+                transform: translateY(0) rotate(-5deg);
+            }
+        }
+
+        /* Confetti Animation */
+        .confetti {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+        }
+
+        .confetti .dot {
+            width: 10px;
+            height: 10px;
+            background-color: #ff4081;
+            border-radius: 50%;
+            margin: 5px;
+            animation: confetti-fall 2s ease-in-out infinite;
+        }
+
+        .confetti .dot:nth-child(odd) {
+            background-color: #ff1e63;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                opacity: 1;
+                transform: translateY(0) rotate(0deg);
+            }
+            100% {
+                opacity: 0;
+                transform: translateY(300px) rotate(360deg);
+            }
+        }
+
+        /* Floating text for added effect */
+        .floating-text {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2.5em;
+            color: blueviolet;
+            font-family: 'Comic Sans MS', sans-serif;
+            animation: text-float 4s ease-in-out infinite;
+            font-weight: bold;
+        }
+
+        @keyframes text-float {
+            0% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-15px);
+            }
+            100% {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="birthday-card">
+        <h1>Happy Birthday!</h1>
+        <p>Wishing you an incredible year ahead filled with joy, laughter, and unforgettable memories. 🎂</p>
+        <button onclick="showSurprise()">Click for Surprise</button>
+
+        <!-- Floating Balloons Image -->
+        <img src="https://img.icons8.com/ios/452/balloon.png" alt="Balloon" class="balloon" onclick="popBalloon()">
+        <img src="https://img.icons8.com/ios/452/flower.png" alt="Flower" class="flower">
+
+        <!-- Floating Text -->
+        <!-- <div class="floating-text">Make a wish! ✨</div> -->
+
+        <!-- Confetti Animation -->
+        <div class="confetti" id="confetti">
+            <div class="dot" style="animation-delay: 0s;"></div>
+            <div class="dot" style="animation-delay: 0.3s;"></div>
+            <div class="dot" style="animation-delay: 0.6s;"></div>
+            <div class="dot" style="animation-delay: 0.9s;"></div>
+        </div>
+    </div>
+
+    <script>
+        // Surprise function: Triggers confetti and shows a fun alert
+        function showSurprise() {
+            const confetti = document.getElementById('confetti');
+            confetti.style.display = 'block';
+            const button = document.querySelector("button");
+
+            button.textContent = "🎉 Surprise! 🎂"; // Change button text
+            button.style.backgroundColor = "#ff1e63"; // Make the button look more festive
+
+            // Play a fun sound when the button is clicked (optional)
+            var audio = new Audio('https://www.soundjay.com/button/beep-07.wav');
+            audio.play();
+
+            setTimeout(() => {
+                alert('Surprise! 🎉 Hope your day is as bright as you are! 🌟');
+            }, 1500);
+        }
+
+        // Balloon popping animation
+        function popBalloon() {
+            const balloon = document.querySelector(".balloon");
+            balloon.style.animation = "pop-balloon 0.5s ease-in-out forwards";
+
+            // Add a cute sound when the balloon is clicked
+            var popSound = new Audio('https://www.soundjay.com/button/beep-07.wav');
+            popSound.play();
+
+            // Restart the animation after popping the balloon
+            setTimeout(() => {
+                balloon.style.animation = "float-balloon 6s ease-in-out infinite";
+            }, 500);
+        }
+
+        // CSS for balloon popping animation
+        document.styleSheets[0].insertRule(`
+            @keyframes pop-balloon {
+                0% {
+                    transform: scale(1);
+                }
+                100% {
+                    transform: scale(0) rotate(180deg);
+                }
+            }
+        `);
+    </script>
+
+</body>
+</html>
